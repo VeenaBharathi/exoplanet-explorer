@@ -63,10 +63,22 @@ Instructions:
     Refactor this code!
      */
     getJSON('../data/earth-like-results.json')
-    .then(function(response) {
-      response.results.forEach(function(url) {
-        getJSON(url).then(createPlanetThumb);
-      });
+    .then(
+          function(response) {
+                response.results.forEach( 
+                   function (url){
+                          console.log(url);
+                          getJSON(url)
+                          .then(function(response){
+                            createPlanetThumb(response);
+                            return res;
+                          });                          
+                     });              
+    })
+    .catch(function(e){
+      console.log("High error");
+      console.log(e);
     });
+    
   });
 })(document);
