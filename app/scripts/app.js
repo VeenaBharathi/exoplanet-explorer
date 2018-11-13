@@ -1,12 +1,3 @@
-/*
-Instructions:
-(1) Get the planet data and add the search header.
-(2) Create the first thumbnail with createPlanetThumb(data)
-(3) Handle errors!
-  (a) Pass 'unknown' to the search header.
-  (b) console.log the error.
- */
-
 // Inline configuration for jshint below. Prevents `gulp jshint` from failing with quiz starter code.
 /* jshint unused: false */
 
@@ -64,6 +55,30 @@ Instructions:
 
     Your code goes here!
      */
-    // getJSON('../data/earth-like-results.json')
+
+     /*
+    Instructions:
+    (1) Get the planet data and add the search header.
+    (2) Create the first thumbnail with createPlanetThumb(data)
+    (3) Handle errors!
+    (a) Pass 'unknown' to the search header.
+    (b) console.log the error.
+      */
+
+    getJSON('../data/earth-like-results.json')
+    .then(function(response){
+        addSearchHeader(response.query);
+        return getJSON(response.results[0]);
+    })
+    .catch(function(){
+        console.log("Error with search");
+    })
+    .then(function(searchdata){
+        createPlanetThumb(searchdata);
+    })
+    .catch(function(error){
+        addSearchHeader('unknown');
+        console.log(error);
+    })
   });
 })(document);
